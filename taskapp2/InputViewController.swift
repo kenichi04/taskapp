@@ -13,6 +13,7 @@ import UserNotifications
 class InputViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
+    @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
     let realm = try! Realm()
@@ -30,6 +31,7 @@ class InputViewController: UIViewController {
         // taskインスタンスには前画面のprepareメソッド内で、新規タスクor編集するタスクを設定済み
         titleTextField.text = task.title
         contentsTextView.text = task.contents
+        categoryTextField.text = task.category
         datePicker.date = task.date // 新規タスクの場合はインスタンス生成した日時が入る
         
     }
@@ -39,6 +41,7 @@ class InputViewController: UIViewController {
         try! realm.write {
             task.title = titleTextField.text!
             task.contents = contentsTextView.text
+            task.category = categoryTextField.text!
             task.date = datePicker.date
             realm.add(task, update: .modified)
         }

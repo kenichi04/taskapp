@@ -15,6 +15,10 @@ class Task: Object {
     @objc dynamic var title = ""
     //  内容
     @objc dynamic var contents = ""
+    
+    // カテゴリー
+    @objc dynamic var category = ""
+    
     // 日時.現在日時取得
     @objc dynamic var date = Date()
     

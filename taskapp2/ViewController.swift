@@ -10,7 +10,8 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     // realmインスタンス
@@ -23,6 +24,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        searchBar.placeholder = "カテゴリー名を入力してください"
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -30,7 +33,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // 入力画面から戻ってきた時に呼ばれる
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // タスク絞り込みを解除
+        taskArray = realm.objects(Task.self)
+        
         // tableViewを更新する
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // キーボード閉じる
+        view.endEditing(true)
+        
+        if let searchWord = searchBar.text, searchWord != "" {
+            print(searchWord)
+            taskArray = realm.objects(Task.self).filter("category == %@", searchWord)
+            
+        } else {
+            taskArray = realm.objects(Task.self)
+        }
+        
         tableView.reloadData()
     }
 
@@ -48,6 +70,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let task = taskArray[indexPath.row]
         // textLabelはオプショナルのため？必要
         cell.textLabel?.text = task.title
+        if task.category != "" {
+            cell.textLabel?.text! += " ( " + task.category + " )"
+        } else {
+            cell.textLabel?.text! += " ( カテゴリー未設定 )"
+        }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
