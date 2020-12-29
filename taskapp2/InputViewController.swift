@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import UserNotifications
 
 class InputViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
@@ -42,7 +43,52 @@ class InputViewController: UIViewController {
             realm.add(task, update: .modified)
         }
         
+        // ローカル通知
+        setNotification(task: task)
+        
         super.viewWillDisappear(animated)
+    }
+    
+    // タスクのローカル通知を登録
+    func setNotification(task: Task) {
+        let content = UNMutableNotificationContent()
+        // 通知のタイトルと内容の設定
+        if task.title == "" {
+            content.title = "(タイトルなし)"
+        } else {
+            content.title = task.title
+        }
+        if task.contents == "" {
+            content.body = "(内容なし)"
+        } else {
+            content.body = task.contents
+        }
+        content.sound = UNNotificationSound.default
+        
+        // ローカル通知が発動するtrigger（日付マッチ）を作成
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: task.date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        // identifier, content, triggerからローカル通知を作成（identifierが同じ場合はローカル通知上書き）
+        let request = UNNotificationRequest(identifier: String(task.id), content: content, trigger: trigger)
+        
+        // ローカル通知を登録
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            print(error ?? "ローカル通知OK")  // errorがnilならローカル通知OKと表示
+        }
+        
+        // 未通知のローカル通知一覧をログ出力
+        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                print("/--------------------")
+                print(request)
+                print("/--------------------")
+            }
+        }
+        
+        
     }
     
     @objc func dismissKeyboard() {
