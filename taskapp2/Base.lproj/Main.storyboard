@@ -126,6 +126,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfM-ew-i7C">
+                                <rect key="frame" x="10" y="559" width="394" height="33"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="決定">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="decisionButtonAction:" destination="PIg-ff-XYa" eventType="touchUpInside" id="jYa-fb-nEP"/>
+                                </connections>
+                            </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="G9g-sx-DlC">
                                 <rect key="frame" x="0.0" y="409" width="414" height="120"/>
                                 <constraints>
@@ -148,6 +159,9 @@
                             <constraint firstItem="jf4-IQ-sJG" firstAttribute="top" secondItem="G1Z-Tu-r5t" secondAttribute="bottom" constant="10" id="Zo2-jG-eHj"/>
                             <constraint firstItem="G9g-sx-DlC" firstAttribute="top" secondItem="Ayq-wT-eWq" secondAttribute="bottom" constant="10" id="bwf-f1-W8D"/>
                             <constraint firstItem="0Gk-ck-NG0" firstAttribute="top" secondItem="sII-Ja-NRa" secondAttribute="top" constant="10" id="dPl-8m-org"/>
+                            <constraint firstItem="SfM-ew-i7C" firstAttribute="leading" secondItem="sII-Ja-NRa" secondAttribute="leading" constant="10" id="ecS-K3-Gyi"/>
+                            <constraint firstItem="SfM-ew-i7C" firstAttribute="top" secondItem="G9g-sx-DlC" secondAttribute="bottom" constant="30" id="itA-qc-vDm"/>
+                            <constraint firstItem="sII-Ja-NRa" firstAttribute="trailing" secondItem="SfM-ew-i7C" secondAttribute="trailing" constant="10" id="jwE-5s-LFb"/>
                             <constraint firstItem="hF5-SA-geg" firstAttribute="top" secondItem="2aF-7L-2MG" secondAttribute="bottom" constant="10" id="lyK-7R-f8v"/>
                             <constraint firstItem="2aF-7L-2MG" firstAttribute="top" secondItem="0Gk-ck-NG0" secondAttribute="bottom" constant="10" id="my1-pc-pNd"/>
                             <constraint firstItem="sII-Ja-NRa" firstAttribute="trailing" secondItem="2aF-7L-2MG" secondAttribute="trailing" constant="10" id="n29-3e-MyH"/>
@@ -164,6 +178,7 @@
                         <outlet property="categoryTextField" destination="Ayq-wT-eWq" id="MYV-Yg-PKa"/>
                         <outlet property="contentsTextView" destination="G1Z-Tu-r5t" id="hs2-BR-3no"/>
                         <outlet property="datePicker" destination="G9g-sx-DlC" id="Vdh-6W-h3b"/>
+                        <outlet property="decisionButton" destination="SfM-ew-i7C" id="4xF-Db-ENm"/>
                         <outlet property="titleTextField" destination="2aF-7L-2MG" id="Wua-Nx-dgD"/>
                     </connections>
                 </viewController>
